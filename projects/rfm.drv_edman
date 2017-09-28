@@ -1,0 +1,23 @@
+*HDR
+RFM run using Jake E custom Driver Table 
+*FLG
+      COO FLX RAD SFC CTM MIX    ! COOling rates, Fluxes/integrate radiances, 
+! Surface properties, continuum, line mixing 
+*SPC
+      700.5 702.8 0.025  ! Output range 700.5-702.8 cm-1 on 0.025 cm-1 grid
+*GAS 
+      CO2 H2O 
+*ATM
+      ./atm/std.atm            ! Seeley standard atmosphere
+*LEV
+     1 10 20 30 40 50  ! levels to output
+*HIT
+      hitran.hit    ! HITRAN 96 line data
+*SFC 
+      300 0.999   ! surface temperature and absorbance
+*RAD 
+      ./out/rad_*.asc  ! flux files
+*COO
+      ./out/coo_*.asc  ! cooling rate files
+
+*END

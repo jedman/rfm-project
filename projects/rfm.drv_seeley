@@ -1,0 +1,20 @@
+! RFM Driver Table
+*HDR
+RFM run using co2_1x.drv
+*FLG
+     NAD RAD SFC CTM LEV OPT
+*SPC
+     1e-02 3000 1
+*GAS
+     H2O CO2
+*ATM
+     co2_1x.atm
+*TAN
+     2.0
+*LEV
+     outgrid.tan
+*HIT
+     hitran.bin
+*SFC
+     300 1
+*END
