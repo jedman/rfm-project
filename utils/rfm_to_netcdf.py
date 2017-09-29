@@ -54,16 +54,21 @@ if __name__=='__main__':
 
   try:
     outdir = sys.argv[1] # where to find the rfm output
-    prefix = sys.argv[2] # prefix for rfm files
-    ncout = sys.argv[3] #
+    ncout = sys.argv[2] # output file
   except IndexError:
-    print('Usage: rfm out directory, file prefix, nc out directory')
+    print('Usage: rfm out directory, file prefix, nc out file')
     exit()
 
-  print('making netCDF file from {}{}* at {}'.format(outdir, prefix, ncout))
+  print('making netCDF file from {} at {}'.format(outdir, ncout))
 
-  dvs, levels, uprad, downrad = get_rfm_data(outdir, prefix=prefix)
+  # get radiances and cooling rate
+  dvs, levels, uprad, downrad = get_rfm_data(outdir, prefix='rad')
+  uprad *= 10E-5 # convert to W/m^2
+  downrad *= 10E-5 
   cooling_rate = get_cooling_rate(uprad, downrad, levels)
+
+  # get optical depths
+  dvs, levels, upopt, downopt = get_rfm_data(outdir, prefix='opt')
 
   # define netCDF dimensions
   ncWAV = netcdf_helper.ncdim('wavenumber')
@@ -75,6 +80,7 @@ if __name__=='__main__':
   ncdims = {'wavenumber': ncWAV, 'z': ncZ}
 
   # define netCDF variables
+  # fluxes
   ncUP = netcdf_helper.ncvar('uprad')
   ncUP.units = 'W/m^2 cm'
   ncUP.data = uprad
@@ -87,7 +93,19 @@ if __name__=='__main__':
   ncCOOL.units = 'W/m^3 cm'
   ncCOOL.data = cooling_rate
   ncCOOL.add_dims(['z','wavenumber'])
-  ncvars = {ncUP.name: ncUP, ncDOWN.name: ncDOWN, ncCOOL.name: ncCOOL}
+
+  # optical depths
+  ncUPopt = netcdf_helper.ncvar('upopt')
+  ncUPopt.units = 'unitless'
+  ncUPopt.data = upopt
+  ncUPopt.add_dims([ 'z', 'wavenumber'])
+  ncDOWNopt = netcdf_helper.ncvar('downopt')
+  ncDOWNopt.units = 'unitless'
+  ncDOWNopt.data = downopt
+  ncDOWNopt.add_dims(['z','wavenumber'])
+
+  ncvars = {ncUP.name: ncUP, ncDOWN.name: ncDOWN, ncCOOL.name: ncCOOL,
+            ncUPopt.name: ncUPopt, ncDOWNopt.name: ncDOWNopt}
 
   # write netcdf file
   netcdf_helper.create_netcdf(ncout, ncvars, ncdims)
