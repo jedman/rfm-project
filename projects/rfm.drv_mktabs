@@ -10,8 +10,8 @@ RFM run using co2_1x.drv
 *ATM 
      atm/co2_1x.atm
 *TAN
-     PLV 
-     6 -20 20 
+     PLV    ! use pressure profile from atm file 
+     6 -20 20 ! use temperatures from atm file, plus 6 more spanning 20K range
 *LEV
      outlevs.lev 
 *HIT
