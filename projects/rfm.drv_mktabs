@@ -1,0 +1,27 @@
+! RFM Driver Table
+*HDR
+RFM run using co2_1x.drv
+*FLG
+     CTM MIX TAB ! Nadir view, radiances, surface, continuum, line mixing, levels, optical depth
+*SPC
+     1e-02 3000 1  ! v1 v2 dv
+*GAS
+     H2O CO2    ! gases
+*ATM 
+     atm/co2_1x.atm
+*TAN
+     PLV 
+     6 -20 20 
+*LEV
+     outlevs.lev 
+*HIT
+     hitran.hit
+*SFC
+     300 1  ! surface t, reflectance
+*RAD 
+      ./out/rad_*.asc  ! radiance files
+*OPT 
+      ./out/opt_*.asc  ! optical depth files
+*TAB
+      ./out/tab/tab_*.asc ! lookup tables
+*END
