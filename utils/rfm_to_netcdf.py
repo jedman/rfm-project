@@ -56,7 +56,7 @@ if __name__=='__main__':
     outdir = sys.argv[1] # where to find the rfm output
     ncout = sys.argv[2] # output file
   except IndexError:
-    print('Usage: rfm out directory, file prefix, nc out file')
+    print('Usage: rfm out directory, nc out file')
     exit()
 
   print('making netCDF file from {} at {}'.format(outdir, ncout))
