@@ -1,23 +1,28 @@
+! RFM Driver Table
 *HDR
-RFM run using Jake E custom Driver Table 
+RFM run with look-up tables (don't use CTM!) 
 *FLG
-      COO FLX RAD SFC CTM MIX    ! COOling rates, Fluxes/integrate radiances, 
-! Surface properties, continuum, line mixing 
+     NAD RAD SFC LEV OPT LUT MIX ! Nadir view, radiances, surface, levels, optical depth, line mixing 
 *SPC
-      700.5 702.8 0.025  ! Output range 700.5-702.8 cm-1 on 0.025 cm-1 grid
-*GAS 
-      CO2 H2O 
-*ATM
-      ./atm/std.atm            ! Seeley standard atmosphere
+     1e-02 3000 1  ! v1 v2 dv
+*GAS
+     H2O CO2    ! gases
+*ATM 
+     atm/dry_co2_blah.atm
+*TAN
+     2.0    ! air mass?
 *LEV
-     1 10 20 30 40 50  ! levels to output
+     outlevs.lev 
 *HIT
-      hitran.hit    ! HITRAN 96 line data
-*SFC 
-      300 0.999   ! surface temperature and absorbance
+     hitran.hit
+*SFC
+     300 1  ! surface t, reflectance
 *RAD 
-      ./out/rad_*.asc  ! flux files
-*COO
-      ./out/coo_*.asc  ! cooling rate files
-
+      ./out/rad_*.asc  ! radiance files
+*OPT 
+      ./out/opt_*.asc  ! optical depth files
+*TAB
+      ./out/tab/tab_*.asc ! lookup tables
+*LUT  
+      ./out/tab/tab_*.asc
 *END
